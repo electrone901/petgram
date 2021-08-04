@@ -1,14 +1,13 @@
 import Button from '@material-ui/core/Button'
 import AppBar from '@material-ui/core/AppBar'
-
+import './Navbar.css'
 
 import React from 'react'
 
 function Navbar() {
   return (
     <div>
-      <Button className="butt">Technology</Button>
-      <h1>Navbar</h1>
+      <h1 className="test">Navbar</h1>
     </div>
   )
 }
