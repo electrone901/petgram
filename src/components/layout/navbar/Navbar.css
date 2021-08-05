@@ -1,9 +1,53 @@
-.b {
-    background-color: red;
-    color: royalblue;
+.grow {
+    flex-grow: 1;
 }
 
-.test {
-    color: red;
-    font-size: 5rem;
+.whiteLink {
+    color: white;
+    font-size: 0.8rem;
+    text-decoration: none;
+    font-weight: 800;
+}
+
+.logo {
+    width: 4rem;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.menuButton {
+    margin-right: 2px;
+}
+
+.search {
+    position: 'relative';
+    border-radius: 5px;
+    background-color: white;
+}
+
+.search:hover {
+    background-color: salmon;
+}
+
+.searchIcon {
+    padding: 5px;
+    height: 100%;
+    position: absolute;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.inputRoot {
+    color: 'inherit';
+}
+
+.sectionMobile {
+    display: flex;
 }

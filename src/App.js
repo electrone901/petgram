@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 // import logo from './logo.svg';
 import './App.css'
-import Navbar from './components/layout/navbar/Navbar'
+import { Navbar } from './components/layout/navbar/Navbar'
 import Footer from './components/layout/footer/Footer'
 import Home from './components/home/Home'
 import CreatePet from './components/create-post/CreatePet'
