@@ -16,7 +16,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications'
 import MoreIcon from '@material-ui/icons/MoreVert'
 import { StylesProvider } from '@material-ui/core/styles'
 import './Navbar.css'
-import logo from '../../../images/images.jpg'
+import logo from '../../../images/logo.jpg'
 
 export const Navbar = withRouter(({ history }) => {
   const [anchorEl, setAnchorEl] = React.useState(null)

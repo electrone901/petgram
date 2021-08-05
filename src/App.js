@@ -13,7 +13,7 @@ function App() {
     <Router>
       <div className="cl">
         <Navbar />
-        <Route exact path="/home" component={Home} />
+        <Route exact path="/" component={Home} />
         <Switch>
           <Route exact path="/create-pet" component={CreatePet} />
         </Switch>
