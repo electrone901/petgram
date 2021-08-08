@@ -4,6 +4,7 @@ import './App.css'
 import { Navbar } from './components/layout/navbar/Navbar'
 import Footer from './components/layout/footer/Footer'
 import Home from './components/home/Home'
+import PetDetails from './components/home/pet-details/PetDetails'
 import CreatePet from './components/create-post/CreatePet'
 
 import React from 'react'
@@ -16,6 +17,7 @@ function App() {
         <Route exact path="/" component={Home} />
         <Switch>
           <Route exact path="/create-pet" component={CreatePet} />
+          <Route path="/pet-details/:petId" component={PetDetails} />
         </Switch>
         <Footer />
       </div>

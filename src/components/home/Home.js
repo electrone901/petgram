@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-  StylesProvider,
-  Chip,
-  Container
-} from '@material-ui/core'
+import { StylesProvider, Chip, Container } from '@material-ui/core'
 import './Home.css'
 import PetGallery from './PetGallery'
 
@@ -49,7 +45,7 @@ function Home() {
             onClick={handleDelete}
           />
         </div>
-        <PetGallery />
+        <PetGallery  />
       </Container>
     </StylesProvider>
   )

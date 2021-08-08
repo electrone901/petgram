@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import ImageList from '@material-ui/core/ImageList'
 import ImageListItem from '@material-ui/core/ImageListItem'
 import IconButton from '@material-ui/core/IconButton'
@@ -96,10 +97,12 @@ const itemData = [
 function PetGallery() {
   return (
     <div className="root">
-      <ImageList rowHeight={350} cols={4}>
-        <ImageListItem key="Subheader" cols={4} style={{ height: 'auto' }}>
-          <ListSubheader component="div">December</ListSubheader>
-        </ImageListItem>
+      <ImageList rowHeight={350} cols={4} style={{ paddingBottom: '3rem' }}>
+        <ImageListItem
+          key="Subheader"
+          cols={4}
+          style={{ height: 'auto' }}
+        ></ImageListItem>
         {itemData.map((item) => (
           <ImageListItem key={item.img}>
             <img src={item.img} alt={item.title} />
@@ -111,7 +114,13 @@ function PetGallery() {
                   aria-label={`info about ${item.title}`}
                   className="icon"
                 >
-                  <Button variant="contained" size="small" color="primary">
+                  <Button
+                    variant="contained"
+                    size="small"
+                    color="primary"
+                    component={Link}
+                    to={`/pet-details/${item.img}`}
+                  >
                     View
                   </Button>
                 </IconButton>

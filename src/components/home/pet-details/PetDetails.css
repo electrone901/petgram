@@ -1,0 +1,22 @@
+.root {
+    flex-grow: 1;
+    min-height: 80vh;
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+}
+
+.img {
+    width: 80%;
+}
+
+.like-btn {
+    text-transform: capitalize;
+}
+
+.wallet-btn {
+    text-transform: capitalize;
+}
+
+.text-field {
+    width: 80%;
+}
