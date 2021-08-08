@@ -4,6 +4,8 @@ import Grid from '@material-ui/core/Grid'
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
+import FavoriteIcon from '@material-ui/icons/Favorite'
+import ShareIcon from '@material-ui/icons/Share'
 import {
   TextField,
   List,
@@ -12,6 +14,7 @@ import {
   ListItemText,
   Divider,
   Avatar,
+  IconButton,
 } from '@material-ui/core'
 import Comment from './Comment'
 
@@ -50,23 +53,37 @@ function PetDetails() {
       <div className="">
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
-            <h1>Pet's Details</h1>
+            <h2>Pet's Details</h2>
             <img className="img" src={pet.img} alt="pet" />
+            <div className="flex-container">
+              <div>
+                <IconButton aria-label="add to favorites">
+                  <FavoriteIcon />
+                </IconButton>
+
+                <IconButton aria-label="share">
+                  <ShareIcon />
+                </IconButton>
+              </div>
+
+              <Typography variant="body1" color="primary">
+                {pet.likes} Likes
+              </Typography>
+            </div>
+
             <Typography gutterBottom variant="subtitle1">
               {`${pet.name} the ${pet.type}`}
             </Typography>
+
             <Typography variant="body2" gutterBottom>
-              Full rights to the owner {pet.Owner}
+              Full rights to the owner {pet.Owner}...
             </Typography>
-            <Button variant="contained" color="primary" className="like-btn">
-              {pet.likes} Likes
-            </Button>
-            <Button variant="contained" className="wallet-btn">
-              Connect Wallet to Mint NFT
-            </Button>
           </Grid>
 
           <Grid item xs={12} sm={6} className="cl-2">
+            <Button variant="contained" className="wallet-btn" color="primary">
+              Connect Wallet to Mint NFT
+            </Button>
             <form noValidate autoComplete="off">
               <TextField
                 id="outlined-basic"
