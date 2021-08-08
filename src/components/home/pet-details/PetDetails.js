@@ -4,7 +4,15 @@ import Grid from '@material-ui/core/Grid'
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
-import TextField from '@material-ui/core/TextField'
+import {
+  TextField,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Divider,
+  Avatar,
+} from '@material-ui/core'
 import Comment from './Comment'
 
 import './PetDetails.css'
@@ -17,7 +25,14 @@ function PetDetails() {
   }
   const handleSubmit = (event) => {
     event.preventDefault()
-    console.log('comment', comment)
+    const newObj = { author: 'Guest', content: comment }
+    const commentArr = [...pet.comments, newObj]
+    console.log(
+      '🚀 ~ file: PetDetails.js ~ line 22 ~ handleSubmit ~ commentArr',
+      commentArr,
+    )
+    pet.comments = [...pet.comments, newObj]
+    setComment('')
   }
   const pet = {
     name: 'Oliver',
@@ -25,7 +40,10 @@ function PetDetails() {
     type: 'Cat',
     Owner: 'Luis C',
     likes: 20,
-    comments: [{ Albert: 'This is awesome' }, { Angie: 'So Cute~' }],
+    comments: [
+      { author: 'Albert', content: 'This is awesome' },
+      { author: 'Angie', content: 'So Cute~' },
+    ],
   }
   return (
     <Container className="root">
@@ -62,6 +80,35 @@ function PetDetails() {
             <Button type="submit" variant="contained" onClick={handleSubmit}>
               Add comment
             </Button>
+
+            {pet?.comments ? (
+              pet.comments.map((comment) => (
+                <List>
+                  <ListItem style={{ paddingLeft: '0px' }}>
+                    <ListItemAvatar>
+                      <Avatar alt="Remy Sharp" />
+                    </ListItemAvatar>
+                    <ListItemText
+                      secondary={
+                        <React.Fragment>
+                          <Typography
+                            component="span"
+                            variant="body2"
+                            className="inline"
+                            color="textPrimary"
+                          >
+                            {comment.author}
+                          </Typography>
+                          {` ${comment.content}`}
+                        </React.Fragment>
+                      }
+                    />
+                  </ListItem>
+                </List>
+              ))
+            ) : (
+              <h2>No comments</h2>
+            )}
           </Grid>
         </Grid>
       </div>

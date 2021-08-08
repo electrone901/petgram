@@ -20,3 +20,8 @@
 .text-field {
     width: 80%;
 }
+
+.inline {
+    display: inline;
+    margin-top: 3rem;
+}
