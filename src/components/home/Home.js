@@ -45,7 +45,7 @@ function Home() {
             onClick={handleDelete}
           />
         </div>
-        <PetGallery  />
+        <PetGallery />
       </Container>
     </StylesProvider>
   )

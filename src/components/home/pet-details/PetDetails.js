@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import ShareIcon from '@material-ui/icons/Share'
+import { StylesProvider } from '@material-ui/core/styles'
 import {
   TextField,
   List,
@@ -16,7 +17,6 @@ import {
   Avatar,
   IconButton,
 } from '@material-ui/core'
-import Comment from './Comment'
 
 import './PetDetails.css'
 
@@ -49,87 +49,94 @@ function PetDetails() {
     ],
   }
   return (
-    <Container className="root">
-      <div className="">
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
-            <h2>Pet's Details</h2>
-            <img className="img" src={pet.img} alt="pet" />
-            <div className="flex-container">
-              <div>
-                <IconButton aria-label="add to favorites">
-                  <FavoriteIcon />
-                </IconButton>
+    <StylesProvider injectFirst>
+      <Container className="root-pet-details">
+        <div className="">
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6}>
+              <h2>{`${pet.name} the ${pet.type}`}</h2>
 
-                <IconButton aria-label="share">
-                  <ShareIcon />
-                </IconButton>
+              <img className="img" src={pet.img} alt="pet" />
+              <div className="flex-container">
+                <div>
+                  <IconButton aria-label="add to favorites">
+                    <FavoriteIcon />
+                  </IconButton>
+
+                  <IconButton aria-label="share">
+                    <ShareIcon />
+                  </IconButton>
+                </div>
+
+                <Typography variant="body1" color="primary">
+                  {pet.likes} Likes
+                </Typography>
               </div>
 
-              <Typography variant="body1" color="primary">
-                {pet.likes} Likes
+              <Typography gutterBottom variant="subtitle1">
+                Pet's Details
               </Typography>
-            </div>
 
-            <Typography gutterBottom variant="subtitle1">
-              {`${pet.name} the ${pet.type}`}
-            </Typography>
+              <Typography variant="body2" gutterBottom>
+                Full rights and credits to the owner @{pet.Owner}...
+              </Typography>
+            </Grid>
 
-            <Typography variant="body2" gutterBottom>
-              Full rights to the owner {pet.Owner}...
-            </Typography>
+            <Grid item xs={12} sm={6}>
+              <Button
+                variant="contained"
+                className="wallet-btn"
+                color="primary"
+              >
+                Connect Wallet to Mint NFT
+              </Button>
+              <form noValidate autoComplete="off">
+                <TextField
+                  id="outlined-basic"
+                  label="Comment"
+                  variant="outlined"
+                  value={comment}
+                  onChange={handleChange}
+                  className="text-field"
+                />
+              </form>
+              <Button type="submit" variant="contained" onClick={handleSubmit}>
+                Add comment
+              </Button>
+
+              {pet?.comments ? (
+                pet.comments.map((comment) => (
+                  <List>
+                    <ListItem style={{ paddingLeft: '0px' }}>
+                      <ListItemAvatar>
+                        <Avatar alt="Remy Sharp" />
+                      </ListItemAvatar>
+                      <ListItemText
+                        secondary={
+                          <React.Fragment>
+                            <Typography
+                              component="span"
+                              variant="body2"
+                              className="inline"
+                              color="textPrimary"
+                            >
+                              {comment.author}
+                            </Typography>
+                            {` ${comment.content}`}
+                          </React.Fragment>
+                        }
+                      />
+                    </ListItem>
+                  </List>
+                ))
+              ) : (
+                <h2>No comments</h2>
+              )}
+            </Grid>
           </Grid>
-
-          <Grid item xs={12} sm={6} className="cl-2">
-            <Button variant="contained" className="wallet-btn" color="primary">
-              Connect Wallet to Mint NFT
-            </Button>
-            <form noValidate autoComplete="off">
-              <TextField
-                id="outlined-basic"
-                label="Comment"
-                variant="outlined"
-                value={comment}
-                onChange={handleChange}
-                className="text-field"
-              />
-            </form>
-            <Button type="submit" variant="contained" onClick={handleSubmit}>
-              Add comment
-            </Button>
-
-            {pet?.comments ? (
-              pet.comments.map((comment) => (
-                <List>
-                  <ListItem style={{ paddingLeft: '0px' }}>
-                    <ListItemAvatar>
-                      <Avatar alt="Remy Sharp" />
-                    </ListItemAvatar>
-                    <ListItemText
-                      secondary={
-                        <React.Fragment>
-                          <Typography
-                            component="span"
-                            variant="body2"
-                            className="inline"
-                            color="textPrimary"
-                          >
-                            {comment.author}
-                          </Typography>
-                          {` ${comment.content}`}
-                        </React.Fragment>
-                      }
-                    />
-                  </ListItem>
-                </List>
-              ))
-            ) : (
-              <h2>No comments</h2>
-            )}
-          </Grid>
-        </Grid>
-      </div>
-    </Container>
+        </div>
+      </Container>
+    </StylesProvider>
   )
 }
 

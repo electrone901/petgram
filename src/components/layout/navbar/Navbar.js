@@ -104,7 +104,9 @@ export const Navbar = withRouter(({ history }) => {
       <div className="grow">
         <AppBar position="static">
           <Toolbar>
-            <img src={logo} alt="logo" className="logo" />
+            <Link to="/" className="whiteLink">
+              <img src={logo} alt="logo" className="logo" />
+            </Link>
             <Link to="/" className="whiteLink">
               <Typography className="title" variant="h6" noWrap>
                 PetGram
@@ -113,33 +115,17 @@ export const Navbar = withRouter(({ history }) => {
 
             <div className="grow" />
             <div className="sectionDesktop">
-              <IconButton aria-label="show 4 new mails" color="inherit">
-                <Badge badgeContent={4} color="secondary">
-                  <MailIcon />
-                </Badge>
-              </IconButton>
-              <IconButton
-                aria-label="show 17 new notifications"
-                color="inherit"
-              >
-                <Badge badgeContent={17} color="secondary">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
+
 
               <Button className="whiteLink" component={Link} to="/">
-                Technology
+                Home
               </Button>
 
-              <Button className="whiteLink" component={Link} to="/paths">
-                Community
+              <Button className="whiteLink" component={Link} to="/create-pet">
+                Create Pet
               </Button>
 
-              <Button className="whiteLink" component={Link} to="/paths">
-                Courses
-              </Button>
-
-              <Button className="whiteLink" component={Link} to="/paths">
+              <Button className="whiteLink" component={Link} to="/">
                 Get Involved
               </Button>
 

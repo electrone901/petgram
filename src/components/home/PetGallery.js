@@ -117,9 +117,9 @@ function PetGallery() {
                   <Button
                     variant="contained"
                     size="small"
-                    color="primary"
                     component={Link}
                     to={`/pet-details/${item.img}`}
+                    className="view-btn"
                   >
                     View
                   </Button>
