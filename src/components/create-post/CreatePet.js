@@ -7,14 +7,16 @@ import {
   Button,
   IconButton,
   MenuItem,
-  SelectField,
 } from '@material-ui/core'
 import PhotoCamera from '@material-ui/icons/PhotoCamera'
 
 import './CreatePet.css'
 
 function CreatePet() {
+  const petTypeRef = React.createRef()
   const [image, setImage] = React.useState('')
+  const [petName, setPetName] = React.useState('')
+  const [ownerName, setOwnerName] = React.useState('')
   const [petType, setPetType] = React.useState('')
 
   const handleImage = ({ target }) => {
@@ -22,25 +24,20 @@ function CreatePet() {
     fileReader.readAsDataURL(target.files[0])
     fileReader.onload = (e) => {
       setImage(e.target.value)
-      console.log('image', image)
     }
   }
 
-  const handlePetType = (e, value) => {
-    setPetType(e.target.value)
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setPetType('')
+    setImage('')
+    console.log('petType', petType)
   }
 
-  const petTypes = ['Cat', 'Dog', 'Bird', 'Fish', 'other']
-  const petCategories = (petTypes) => {
-    petTypes.autoComplete((type) => (
-      <MenuItem
-        key={type}
-        insetChildren={true}
-        value={type}
-        primaryText={type}
-      ></MenuItem>
-    ))
-  }
+  console.log('petType', petType)
+  console.log('petName', petName)
+  console.log('ownerName', ownerName)
+
   return (
     <StylesProvider injectFirst>
       <Container className="root-create-pet">
@@ -53,6 +50,7 @@ function CreatePet() {
               accept="image/*"
               className="input"
               id="icon-button-photo"
+              defaultValue={image}
               onChange={handleImage}
               type="file"
             />
@@ -68,6 +66,8 @@ function CreatePet() {
               label="Pet's name"
               variant="outlined"
               className="text-field"
+              defaultValue={petName}
+              onChange={(e) => setPetName(e.target.value)}
             />
 
             <TextField
@@ -76,11 +76,28 @@ function CreatePet() {
               label="Owner's name"
               variant="outlined"
               className="text-field"
+              defaultValue={ownerName}
+              onChange={(e) => setOwnerName(e.target.value)}
             />
 
-            {/* <SelectField  multiple={true} hintText="Select your pet type" values={values} onChange={}>
-            {petCategories}
-          </SelectField> */}
+            <TextField
+              fullWidth
+              name="petType"
+              select
+              label="Choose one option"
+              variant="outlined"
+              className="text-field"
+              onChange={(e) => setPetType(e.target.value)}
+              defaultValue=""
+              ref={petTypeRef}
+            >
+              <MenuItem value="Cat">Cat</MenuItem>
+              <MenuItem value="Dog">Dog</MenuItem>
+              <MenuItem value="Bird">Bird</MenuItem>
+              <MenuItem value="Fish">Fish</MenuItem>
+              <MenuItem value="Other">Other</MenuItem>
+            </TextField>
+
             <Button size="large" variant="contained" color="primary">
               Submit
             </Button>
