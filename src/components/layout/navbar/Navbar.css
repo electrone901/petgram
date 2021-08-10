@@ -57,3 +57,9 @@
 .sectionMobile {
     display: flex;
 }
+
+.connect-wallet-btn {
+    background-color: #06c2fbcc;
+    color: white;
+    font-weight: 800;
+}

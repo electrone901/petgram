@@ -18,7 +18,7 @@ import { StylesProvider } from '@material-ui/core/styles'
 import './Navbar.css'
 import logo from '../../../images/logo.jpg'
 
-export const Navbar = withRouter(({ history }) => {
+export const Navbar = withRouter(({ account, loadWeb3 }) => {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
 
@@ -115,8 +115,6 @@ export const Navbar = withRouter(({ history }) => {
 
             <div className="grow" />
             <div className="sectionDesktop">
-
-
               <Button className="whiteLink" component={Link} to="/">
                 Home
               </Button>
@@ -125,8 +123,14 @@ export const Navbar = withRouter(({ history }) => {
                 Create Pet
               </Button>
 
-              <Button className="whiteLink" component={Link} to="/">
-                Get Involved
+              <Button
+                variant="contained"
+                className="connect-wallet-btn"
+                onClick={() => {
+                  loadWeb3()
+                }}
+              >
+                {account ? 'Connected✓' : 'Connect Wallet'}
               </Button>
 
               <IconButton

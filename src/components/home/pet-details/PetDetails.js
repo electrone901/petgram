@@ -54,8 +54,6 @@ function PetDetails() {
 
   const loadWeb3 = async () => {
     if (window.ethereum) {
-      console.log('window.ethereum', window.ethereum)
-
       window.web3 = new Web3(window.ethereum)
       await window.ethereum.enable()
     } else if (window.web3) {
@@ -69,10 +67,8 @@ function PetDetails() {
     const accounts = await web3.eth.getAccounts()
     setAccount(accounts[0])
     const networkId = await web3.eth.net.getId()
-    console.log(' networkId', networkId)
-
     const networkData = MyPet.networks[networkId]
-    console.log('networkData', networkData)
+
 
     if (networkData) {
       const abi = MyPet.abi
@@ -83,7 +79,7 @@ function PetDetails() {
       window.alert('Contract is not deployed to detected network')
     }
   }
-  console.log('account', account)
+ 
 
   return (
     <StylesProvider injectFirst>
