@@ -1,12 +1,23 @@
-pragma solidity ^0.8.0;
-
+pragma solidity ^0.6.12;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 contract Pet is ERC721 {
-  // Pet = contract name, PET=symbol
-    constructor() ERC721("Pet", "PET") public{
+    event PetNFTCreated (
+        uint tokenId,
+        string imageURL,
+        uint date,
+        address payable from
+    );
+
+    constructor() ERC721("MyPet", "PET") public  {}
+
+    function mintPetNFT(string memory _tokenURI) external {
+        uint _tokenId = totalSupply().add(1);
+        _safeMint(msg.sender, _tokenId);
+        _setTokenURI(_tokenId, _tokenURI);
+
+        emit PetNFTCreated(_tokenId, _tokenURI, now, msg.sender);
     }
+
 }
 
-
-git commit -m "Initializing a simple contract"

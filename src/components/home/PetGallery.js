@@ -103,8 +103,8 @@ function PetGallery() {
           cols={4}
           style={{ height: 'auto' }}
         ></ImageListItem>
-        {itemData.map((item) => (
-          <ImageListItem key={item.img}>
+        {itemData.map((item, id) => (
+          <ImageListItem key={id}>
             <img src={item.img} alt={item.title} />
             <ImageListItemBar
               title={item.title}

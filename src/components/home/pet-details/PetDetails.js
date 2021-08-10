@@ -13,14 +13,17 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
-  Divider,
   Avatar,
   IconButton,
 } from '@material-ui/core'
+import Web3 from 'web3'
+import MyPet from '../../../abis/Pet.json'
 
 import './PetDetails.css'
 
 function PetDetails() {
+  const [account, setAccount] = React.useState('')
+  const [contractData, setContractData] = React.useState('')
   const [comment, setComment] = React.useState('')
 
   const handleChange = (event) => {
@@ -48,6 +51,40 @@ function PetDetails() {
       { author: 'Angie', content: 'So Cute~' },
     ],
   }
+
+  const loadWeb3 = async () => {
+    if (window.ethereum) {
+      console.log('window.ethereum', window.ethereum)
+
+      window.web3 = new Web3(window.ethereum)
+      await window.ethereum.enable()
+    } else if (window.web3) {
+      window.web3 = new Web3(window.web3.currentProvider)
+    } else {
+      window.alert(
+        'Non-Ethereum browser detected. You should consider trying MetaMask!',
+      )
+    }
+    const web3 = window.web3
+    const accounts = await web3.eth.getAccounts()
+    setAccount(accounts[0])
+    const networkId = await web3.eth.net.getId()
+    console.log(' networkId', networkId)
+
+    const networkData = MyPet.networks[networkId]
+    console.log('networkData', networkData)
+
+    if (networkData) {
+      const abi = MyPet.abi
+      const address = MyPet.networks[networkId].address
+      const response = new web3.eth.Contract(abi, address)
+      setContractData(response)
+    } else {
+      window.alert('Contract is not deployed to detected network')
+    }
+  }
+  console.log('account', account)
+
   return (
     <StylesProvider injectFirst>
       <Container className="root-pet-details">
@@ -87,6 +124,7 @@ function PetDetails() {
                 variant="contained"
                 className="wallet-btn"
                 color="primary"
+                onClick={loadWeb3}
               >
                 Connect Wallet to Mint NFT
               </Button>
@@ -105,8 +143,8 @@ function PetDetails() {
               </Button>
 
               {pet?.comments ? (
-                pet.comments.map((comment) => (
-                  <List>
+                pet.comments.map((comment, id) => (
+                  <List key={id}>
                     <ListItem style={{ paddingLeft: '0px' }}>
                       <ListItemAvatar>
                         <Avatar alt="Remy Sharp" />
