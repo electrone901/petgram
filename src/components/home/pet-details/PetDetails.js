@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import Container from '@material-ui/core/Container'
@@ -16,14 +16,12 @@ import {
   Avatar,
   IconButton,
 } from '@material-ui/core'
-import Web3 from 'web3'
-import MyPet from '../../../abis/Pet.json'
 
 import './PetDetails.css'
 
 function PetDetails({ account, contractData }) {
-  // const [account, setAccount] = React.useState('')
-  // const [contractData, setContractData] = React.useState('')
+  const [petsData, setPetsData] = useState('')
+
   const [comment, setComment] = React.useState('')
 
   const handleChange = (event) => {
@@ -33,10 +31,6 @@ function PetDetails({ account, contractData }) {
     event.preventDefault()
     const newObj = { author: 'Guest', content: comment }
     const commentArr = [...pet.comments, newObj]
-    console.log(
-      '🚀 ~ file: PetDetails.js ~ line 22 ~ handleSubmit ~ commentArr',
-      commentArr,
-    )
     pet.comments = [...pet.comments, newObj]
     setComment('')
   }
@@ -59,21 +53,27 @@ function PetDetails({ account, contractData }) {
         'https://bafyreici4jgujgf6x6pzaqw4ayh5byu4rnrnfknlmma6a45zocluc7g2ou.ipfs.dweb.link/metadata.json',
       )
       .send({ from: account })
-
-    console.log('mintNFT ~ response', response)
   }
 
   const getNFTMetadata = async () => {
-    const metadataURI = await contractData.tokenURI(
-      'https://bafyreia4vo2b4fd2hyjn7pqgme3iigrh2rwutbct3oz7ymveaqw7pz4xki.ipfs.dweb.link/metadata.json',
-    )
-    const metadata = await contractData.getIPFSJSON(metadataURI)
-    console.log(
-      '🚀 ~ file: PetDetails.js ~ line 66 ~ getNFTMetadata ~ metadata',
-      metadata,
-    )
+    const temp = []
+    const totalSupply = await contractData.methods.totalSupply().call()
 
-    return { metadata, metadataURI }
+    for (let i = 1; i <= totalSupply; i++) {
+      try {
+        let metadataURL = await contractData.methods.tokenURI(i).call()
+        metadataURL = metadataURL.split('://')
+        let data = await fetch('https://ipfs.io/ipfs/' + metadataURL[1])
+        data = await data.json()
+        data.id = metadataURL[1]
+        data.cid = metadataURL[1].slice(0, 59)
+        console.log(data)
+        temp.push(data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    setPetsData(temp)
   }
 
   return (
