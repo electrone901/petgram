@@ -9,8 +9,9 @@ import {
   MenuItem,
 } from '@material-ui/core'
 import PhotoCamera from '@material-ui/icons/PhotoCamera'
-
 import './CreatePet.css'
+import { NFTStorage, File } from 'nft.storage'
+import { apiKey } from '../../APIKEYS'
 
 function CreatePet() {
   const petTypeRef = React.createRef()
@@ -18,20 +19,35 @@ function CreatePet() {
   const [petName, setPetName] = React.useState('')
   const [ownerName, setOwnerName] = React.useState('')
   const [petType, setPetType] = React.useState('')
+  const [imageName, setImageName] = React.useState('')
 
   const handleImage = ({ target }) => {
     const fileReader = new FileReader()
     fileReader.readAsDataURL(target.files[0])
     fileReader.onload = (e) => {
       setImage(e.target.value)
+      setImageName(target.files[0].name)
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setPetType('')
-    setImage('')
-    console.log('petType', petType)
+    try {
+      const client = new NFTStorage({ token: apiKey })
+      const metadata = await client.store({
+        name: petName,
+        description: `${ownerName}, ${petType}`,
+        image: new File([image], imageName, { type: 'image/jpg' }),
+      })
+      console.log(metadata.url)
+      console.log(metadata.data)
+      // ipfs://bafyreib4pff766vhpbxbhjbqqnsh5emeznvujayjj4z2iu533cprgbz23m/metadata.json
+
+      setPetType('')
+      setImage('')
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   console.log('petType', petType)
@@ -98,7 +114,12 @@ function CreatePet() {
               <MenuItem value="Other">Other</MenuItem>
             </TextField>
 
-            <Button size="large" variant="contained" color="primary">
+            <Button
+              size="large"
+              variant="contained"
+              color="primary"
+              onClick={handleSubmit}
+            >
               Submit
             </Button>
           </form>

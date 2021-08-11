@@ -21,9 +21,9 @@ import MyPet from '../../../abis/Pet.json'
 
 import './PetDetails.css'
 
-function PetDetails() {
-  const [account, setAccount] = React.useState('')
-  const [contractData, setContractData] = React.useState('')
+function PetDetails({ account, contractData }) {
+  // const [account, setAccount] = React.useState('')
+  // const [contractData, setContractData] = React.useState('')
   const [comment, setComment] = React.useState('')
 
   const handleChange = (event) => {
@@ -52,34 +52,29 @@ function PetDetails() {
     ],
   }
 
-  const loadWeb3 = async () => {
-    if (window.ethereum) {
-      window.web3 = new Web3(window.ethereum)
-      await window.ethereum.enable()
-    } else if (window.web3) {
-      window.web3 = new Web3(window.web3.currentProvider)
-    } else {
-      window.alert(
-        'Non-Ethereum browser detected. You should consider trying MetaMask!',
+  const mintNFT = async () => {
+    console.log('mintNFT ~ contractData', contractData)
+    const response = await contractData.methods
+      .mintPetNFT(
+        'https://bafyreici4jgujgf6x6pzaqw4ayh5byu4rnrnfknlmma6a45zocluc7g2ou.ipfs.dweb.link/metadata.json',
       )
-    }
-    const web3 = window.web3
-    const accounts = await web3.eth.getAccounts()
-    setAccount(accounts[0])
-    const networkId = await web3.eth.net.getId()
-    const networkData = MyPet.networks[networkId]
+      .send({ from: account })
 
-
-    if (networkData) {
-      const abi = MyPet.abi
-      const address = MyPet.networks[networkId].address
-      const response = new web3.eth.Contract(abi, address)
-      setContractData(response)
-    } else {
-      window.alert('Contract is not deployed to detected network')
-    }
+    console.log('mintNFT ~ response', response)
   }
- 
+
+  const getNFTMetadata = async () => {
+    const metadataURI = await contractData.tokenURI(
+      'https://bafyreia4vo2b4fd2hyjn7pqgme3iigrh2rwutbct3oz7ymveaqw7pz4xki.ipfs.dweb.link/metadata.json',
+    )
+    const metadata = await contractData.getIPFSJSON(metadataURI)
+    console.log(
+      '🚀 ~ file: PetDetails.js ~ line 66 ~ getNFTMetadata ~ metadata',
+      metadata,
+    )
+
+    return { metadata, metadataURI }
+  }
 
   return (
     <StylesProvider injectFirst>
@@ -88,6 +83,10 @@ function PetDetails() {
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
               <h2>{`${pet.name} the ${pet.type}`}</h2>
+
+              <Button variant="contained" onClick={getNFTMetadata}>
+                getNFTMetadata
+              </Button>
 
               <img className="img" src={pet.img} alt="pet" />
               <div className="flex-container">
@@ -120,9 +119,9 @@ function PetDetails() {
                 variant="contained"
                 className="wallet-btn"
                 color="primary"
-                onClick={loadWeb3}
+                onClick={mintNFT}
               >
-                Connect Wallet to Mint NFT
+                Mint NFT
               </Button>
               <form noValidate autoComplete="off">
                 <TextField

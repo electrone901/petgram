@@ -130,7 +130,7 @@ export const Navbar = withRouter(({ account, loadWeb3 }) => {
                   loadWeb3()
                 }}
               >
-                {account ? 'Connected✓' : 'Connect Wallet'}
+                {account ? account : 'Connect Wallet'}
               </Button>
 
               <IconButton

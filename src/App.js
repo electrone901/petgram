@@ -14,6 +14,9 @@ function App() {
   const [account, setAccount] = React.useState('')
   const [contractData, setContractData] = React.useState('')
 
+  const [totalSupply, setTotalSupply] = React.useState('')
+  const [pets, setPets] = React.useState('')
+
   const loadWeb3 = async () => {
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum)
@@ -28,20 +31,31 @@ function App() {
     const accounts = await web3.eth.getAccounts()
     setAccount(accounts[0])
     const networkId = await web3.eth.getId()
-    console.log('🚀 ~ file: App.js ~ line 31 ~ loadWeb3 ~ networkId', networkId)
     const networkData = MyPet.networks[networkId]
 
     if (networkData) {
       const abi = MyPet.abi
       const address = MyPet.networks[networkId].address
-      const response = new web3.eth.Contract(abi, address)
-      setContractData(response)
+      const myContract = new web3.eth.Contract(abi, address)
+      setContractData(myContract)
+
+      const totalSuply = await myContract.methods.totalSupply().call()
+      console.log(
+        '🚀 ~ file: App.js ~ line 42 ~ loadWeb3 ~ totalSuply',
+        totalSuply.toString(),
+      )
+      setTotalSupply(totalSuply)
+
+      // Loads pets
+      // for (let i = 1; i <= totalSuply; i++) {
+      //   const newPets = await myContract.methods.pet(i - 1).call()
+      //   setPets([...pets, newPets])
+      // }
+      console.log('🚀 ~ pets from state', pets)
     } else {
       window.alert('Contract is not deployed to detectednetwork')
     }
   }
-
-  console.log(' what account', account)
 
   return (
     <Router>
@@ -50,7 +64,10 @@ function App() {
         <Route exact path="/" component={Home} />
         <Switch>
           <Route exact path="/create-pet" component={CreatePet} />
-          <Route path="/pet-details/:petId" component={PetDetails} />
+
+          <Route path="/pet-details/:petId">
+            <PetDetails account={account} contractData={contractData} />
+          </Route>
         </Switch>
         <Footer />
       </div>
