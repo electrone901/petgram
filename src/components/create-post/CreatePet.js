@@ -52,8 +52,6 @@ function CreatePet() {
     }
   }
 
-  console.log('image,imageName, imageType ', image, imageName, imageType)
-
   return (
     <StylesProvider injectFirst>
       <Container className="root-create-pet">
