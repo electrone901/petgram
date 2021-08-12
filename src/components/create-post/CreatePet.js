@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import {
   TextField,
@@ -18,13 +18,13 @@ import './CreatePet.css'
 function CreatePet() {
   const history = useHistory()
   const petTypeRef = React.createRef()
-  const [image, setImage] = React.useState('')
-  const [imageName, setImageName] = React.useState('')
-  const [imageType, setImageType] = React.useState('')
-  const [petName, setPetName] = React.useState('')
-  const [ownerName, setOwnerName] = React.useState('')
-  const [petType, setPetType] = React.useState('')
-  const [loading, setLoading] = React.useState(false)
+  const [image, setImage] = useState('')
+  const [imageName, setImageName] = useState('')
+  const [imageType, setImageType] = useState('')
+  const [petName, setPetName] = useState('')
+  const [ownerName, setOwnerName] = useState('')
+  const [petType, setPetType] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const handleImage = (event) => {
     setImage(event.target.files[0])
@@ -43,9 +43,6 @@ function CreatePet() {
         description: `${ownerName}, ${petType}`,
         image: new File([image], imageName, { type: imageType }),
       })
-
-      console.log('metadata')
-
       if (metadata) {
         history.push('/')
       }
@@ -82,7 +79,6 @@ function CreatePet() {
                     <PhotoCamera />
                   </IconButton>
                 </label>
-
                 <TextField
                   fullWidth
                   id="outlined-basic"
@@ -92,7 +88,6 @@ function CreatePet() {
                   defaultValue={petName}
                   onChange={(e) => setPetName(e.target.value)}
                 />
-
                 <TextField
                   fullWidth
                   id="outlined-basic"
@@ -102,7 +97,6 @@ function CreatePet() {
                   defaultValue={ownerName}
                   onChange={(e) => setOwnerName(e.target.value)}
                 />
-
                 <TextField
                   fullWidth
                   name="petType"
@@ -120,7 +114,6 @@ function CreatePet() {
                   <MenuItem value="Fish">Fish</MenuItem>
                   <MenuItem value="Other">Other</MenuItem>
                 </TextField>
-
                 <Button
                   size="large"
                   variant="contained"
