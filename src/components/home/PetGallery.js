@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import ImageList from '@material-ui/core/ImageList'
 import ImageListItem from '@material-ui/core/ImageListItem'
 import IconButton from '@material-ui/core/IconButton'
 import Button from '@material-ui/core/Button'
@@ -8,6 +7,7 @@ import ImageListItemBar from '@material-ui/core/ImageListItemBar'
 import './PetGallery.css'
 import CircularStatic from '../commons/CircularProgressWithLabel'
 import { apiKey } from '../../APIKEYS'
+import { Grid } from '@material-ui/core'
 
 function PetGallery() {
   const [petsData, setPetsData] = useState([])
@@ -59,47 +59,45 @@ function PetGallery() {
   }, [])
 
   return (
-    <div style={{ minHeight: '70vh' }}>
+    <div style={{ minHeight: '70vh', paddingBottom: '3rem' }}>
       {loading ? (
         <CircularStatic />
       ) : (
-        <ImageList rowHeight={350} cols={5} style={{ paddingBottom: '3rem' }}>
-          <ImageListItem
-            key="Subheader"
-            cols={5}
-            style={{ height: 'auto' }}
-          ></ImageListItem>
-
-          {petsData.length ? (
-            petsData.map((pet, index) => (
-              <ImageListItem key={index}>
-                <img src={pet.image} alt={pet.name} />
-                <ImageListItemBar
-                  title={pet.name}
-                  subtitle={<span>by: {pet.description}</span>}
-                  actionIcon={
-                    <IconButton
-                      aria-label={`info about ${pet.name}`}
-                      className="icon"
-                    >
-                      <Button
-                        variant="contained"
-                        size="small"
-                        component={Link}
-                        to={`/pet-details/${pet.image}`}
-                        className="view-btn"
-                      >
-                        View
-                      </Button>
-                    </IconButton>
-                  }
-                />
-              </ImageListItem>
-            ))
-          ) : (
-            <h2>No Pets Yet...</h2>
-          )}
-        </ImageList>
+        <div style={{ flexGrow: 1 }}>
+          <Grid container spacing={1}>
+            {petsData.length ? (
+              petsData.map((pet, index) => (
+                <Grid item xs={6} sm={3} key={index}>
+                  <ImageListItem style={{ height: '450px', listStyle: 'none' }}>
+                    <img src={pet.image} alt={pet.name} />
+                    <ImageListItemBar
+                      title={pet.name}
+                      subtitle={<span>by: {pet.description}</span>}
+                      actionIcon={
+                        <IconButton
+                          aria-label={`info about ${pet.name}`}
+                          className="icon"
+                        >
+                          <Button
+                            variant="contained"
+                            size="small"
+                            component={Link}
+                            to={`/pet-details/${pet.cid}`}
+                            className="view-btn"
+                          >
+                            View
+                          </Button>
+                        </IconButton>
+                      }
+                    />
+                  </ImageListItem>
+                </Grid>
+              ))
+            ) : (
+              <h2>No Pets Yet...</h2>
+            )}
+          </Grid>
+        </div>
       )}
     </div>
   )

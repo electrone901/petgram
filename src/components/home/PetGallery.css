@@ -18,3 +18,8 @@
     text-transform: capitalize;
     border-color: #9d9e9b;
 }
+
+.gridList {
+    width: 500;
+    height: 700;
+}

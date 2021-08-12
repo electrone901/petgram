@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
@@ -21,8 +20,7 @@ import './PetDetails.css'
 
 function PetDetails({ account, contractData }) {
   const [petsData, setPetsData] = useState('')
-
-  const [comment, setComment] = React.useState('')
+  const [comment, setComment] = useState('')
 
   const handleChange = (event) => {
     setComment(event.target.value)
