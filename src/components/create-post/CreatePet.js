@@ -16,18 +16,16 @@ import { apiKey } from '../../APIKEYS'
 function CreatePet() {
   const petTypeRef = React.createRef()
   const [image, setImage] = React.useState('')
+  const [imageName, setImageName] = React.useState('')
+  const [imageType, setImageType] = React.useState('')
   const [petName, setPetName] = React.useState('')
   const [ownerName, setOwnerName] = React.useState('')
   const [petType, setPetType] = React.useState('')
-  const [imageName, setImageName] = React.useState('')
 
-  const handleImage = ({ target }) => {
-    const fileReader = new FileReader()
-    fileReader.readAsDataURL(target.files[0])
-    fileReader.onload = (e) => {
-      setImage(e.target.value)
-      setImageName(target.files[0].name)
-    }
+  const handleImage = (event) => {
+    setImage(event.target.files[0])
+    setImageName(event.target.files[0].name)
+    setImageType(event.target.files[0].type)
   }
 
   const handleSubmit = async (e) => {
@@ -37,10 +35,10 @@ function CreatePet() {
       const metadata = await client.store({
         name: petName,
         description: `${ownerName}, ${petType}`,
-        image: new File([image], imageName, { type: 'image/jpg' }),
+        image: new File([image], imageName, { type: imageType }),
       })
-      console.log(metadata.url)
-      console.log(metadata.data)
+      // console.log(metadata.url)
+      // console.log(metadata.data)
       // ipfs://bafyreib4pff766vhpbxbhjbqqnsh5emeznvujayjj4z2iu533cprgbz23m/metadata.json
 
       setPetType('')
@@ -50,9 +48,7 @@ function CreatePet() {
     }
   }
 
-  console.log('petType', petType)
-  console.log('petName', petName)
-  console.log('ownerName', ownerName)
+  console.log('image,imageName, imageType ', image, imageName, imageType)
 
   return (
     <StylesProvider injectFirst>

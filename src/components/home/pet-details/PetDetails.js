@@ -62,12 +62,16 @@ function PetDetails({ account, contractData }) {
     for (let i = 1; i <= totalSupply; i++) {
       try {
         let metadataURL = await contractData.methods.tokenURI(i).call()
-        metadataURL = metadataURL.split('://')
-        let data = await fetch('https://ipfs.io/ipfs/' + metadataURL[1])
+
+        // metadataURL = metadataURL.split('://')
+
+        let data = await fetch(metadataURL)
         data = await data.json()
-        data.id = metadataURL[1]
-        data.cid = metadataURL[1].slice(0, 59)
-        console.log(data)
+        console.log(
+          '🚀 ~ file: PetDetails.js ~ line 70 ~ getNFTMetadata ~ data',
+          data,
+        )
+
         temp.push(data)
       } catch (error) {
         console.error(error)
@@ -75,6 +79,8 @@ function PetDetails({ account, contractData }) {
     }
     setPetsData(temp)
   }
+
+  console.log(petsData)
 
   return (
     <StylesProvider injectFirst>
@@ -87,6 +93,10 @@ function PetDetails({ account, contractData }) {
               <Button variant="contained" onClick={getNFTMetadata}>
                 getNFTMetadata
               </Button>
+
+              <h2>data from nftStorage</h2>
+
+              {/* <img src="" alt="" /> */}
 
               <img className="img" src={pet.img} alt="pet" />
               <div className="flex-container">
