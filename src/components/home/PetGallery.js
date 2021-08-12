@@ -4,98 +4,11 @@ import ImageList from '@material-ui/core/ImageList'
 import ImageListItem from '@material-ui/core/ImageListItem'
 import IconButton from '@material-ui/core/IconButton'
 import Button from '@material-ui/core/Button'
-import ListSubheader from '@material-ui/core/ListSubheader'
 import ImageListItemBar from '@material-ui/core/ImageListItemBar'
 import './PetGallery.css'
-import CircularStatic from './CircularProgressWithLabel'
+import CircularStatic from '../commons/CircularProgressWithLabel'
 import { apiKey } from '../../APIKEYS'
 
-const itemData = [
-  {
-    img: 'https://siasky.net/BACR1MMP7SnHgOfaAqWiYbUmeTy9bbql3yRAJtB8fWWgug/',
-    title: 'Doggy Mo',
-    author: 'Albert Lee',
-    cols: 1,
-  },
-
-  {
-    img: 'https://siasky.net/IABzyC1tIS5YVwp6I-vbHRCYY6P8l_PPXxnshWz_Fdjfdw',
-    title: 'Birdthy ',
-    author: 'Joe Lee',
-    cols: 1,
-  },
-
-  {
-    img: 'https://siasky.net/AAD4luU9OyDiOX3Rm5ns2KuzLdkp8REMZKqY69x33izvaQ',
-    title: 'Doggy Kin',
-    author: 'Albert Lee',
-    cols: 1,
-  },
-
-  {
-    img: 'https://siasky.net/BACR1MMP7SnHgOfaAqWiYbUmeTy9bbql3yRAJtB8fWWgug/',
-    title: 'Doggy Mo',
-    author: 'Albert Lee',
-    cols: 1,
-  },
-  {
-    img: 'https://siasky.net/_Al2dUTWsyrnh2mZF4r3DWB8UQMmHDkJEA4lf0zhg3Hw7Q',
-    title: 'Doggy Mo',
-    author: 'Albert Lee',
-    cols: 1,
-  },
-  {
-    img: 'https://siasky.net/AAD4luU9OyDiOX3Rm5ns2KuzLdkp8REMZKqY69x33izvaQ',
-    title: 'Doggy Kin',
-    author: 'Albert Lee',
-    cols: 1,
-  },
-
-  {
-    img: 'https://siasky.net/BACR1MMP7SnHgOfaAqWiYbUmeTy9bbql3yRAJtB8fWWgug/',
-    title: 'Doggy Mo',
-    author: 'Albert Lee',
-    cols: 1,
-  },
-  {
-    img: 'https://siasky.net/_Al2dUTWsyrnh2mZF4r3DWB8UQMmHDkJEA4lf0zhg3Hw7Q',
-    title: 'Doggy Mo',
-    author: 'Albert Lee',
-    cols: 1,
-  },
-  {
-    img: 'https://siasky.net/BACR1MMP7SnHgOfaAqWiYbUmeTy9bbql3yRAJtB8fWWgug/',
-    title: 'Doggy Mo',
-    author: 'Albert Lee',
-    cols: 1,
-  },
-  {
-    img: 'https://siasky.net/_Al2dUTWsyrnh2mZF4r3DWB8UQMmHDkJEA4lf0zhg3Hw7Q',
-    title: 'Doggy Mo',
-    author: 'Albert Lee',
-    cols: 1,
-  },
-  {
-    img: 'https://siasky.net/AAD4luU9OyDiOX3Rm5ns2KuzLdkp8REMZKqY69x33izvaQ',
-    title: 'Doggy Kin',
-    author: 'Albert Lee',
-    cols: 1,
-  },
-
-  {
-    img: 'https://siasky.net/BACR1MMP7SnHgOfaAqWiYbUmeTy9bbql3yRAJtB8fWWgug/',
-    title: 'Doggy Mo',
-    author: 'Albert Lee',
-    cols: 1,
-  },
-  {
-    img: 'https://siasky.net/_Al2dUTWsyrnh2mZF4r3DWB8UQMmHDkJEA4lf0zhg3Hw7Q',
-    title: 'Doggy Mo',
-    author: 'Albert Lee',
-    cols: 1,
-  },
-]
-// git commit -m "connected to nftStorage and fetched petsData.Render data on PetGallery from nft.storage"
 function PetGallery() {
   const [petsData, setPetsData] = useState([])
   const [loading, setLoading] = useState(false)
