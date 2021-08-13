@@ -22,12 +22,14 @@ import './PetDetails.css'
 import { CircularStatic } from '../../commons/CircularProgressWithLabel'
 
 function PetDetails({ account, contractData }) {
+  console.log('account, contractData ', account, contractData)
   const { petId } = useParams()
   const [petsData, setPetsData] = useState('')
   const [image, setPetImage] = useState([])
   const [petName, setPetName] = useState([])
   const [petOwner, setOwnerName] = useState([])
   const [petCategory, setPetCategory] = useState([])
+  const [petTransactions, setpetTransactions] = useState([])
   const [comment, setComment] = useState('')
 
   // const [metadata, setMetadata] = useState({})
@@ -51,6 +53,7 @@ function PetDetails({ account, contractData }) {
       setPetCategory(petCategory)
       // setMetadata(data)
     }
+
     if (petId) {
       getMetadata()
       getImage()
@@ -60,6 +63,7 @@ function PetDetails({ account, contractData }) {
   const handleChange = (event) => {
     setComment(event.target.value)
   }
+
   const handleSubmit = (event) => {
     event.preventDefault()
     const newObj = { author: 'Guest', content: comment }
@@ -67,6 +71,7 @@ function PetDetails({ account, contractData }) {
     pet.comments = [...pet.comments, newObj]
     setComment('')
   }
+
   const pet = {
     name: 'Oliver',
     img: 'https://siasky.net/OADaRfw_nMqqXCz5NXXLq5xN6R3nScEKbzsRdqdEQrLL5A',
@@ -79,13 +84,45 @@ function PetDetails({ account, contractData }) {
     ],
   }
 
-  const mintNFT = async () => {
-    console.log('mintNFT ~ contractData', contractData)
-    const response = await contractData.methods
-      .mintPetNFT(
-        'https://bafyreici4jgujgf6x6pzaqw4ayh5byu4rnrnfknlmma6a45zocluc7g2ou.ipfs.dweb.link/metadata.json',
-      )
-      .send({ from: account })
+  const mintNFT = async (petId) => {
+    try{
+      const data = await contractData.methods
+        .mintPetNFT("test")
+        .send({ from: account });
+
+      console.log(data);
+
+    } catch(err) {
+      console.error(err);
+
+    }
+
+    // try {
+    //   console.log('**here', contractData)
+    //   // creates a blockchain transaction
+    //   const res = await contractData.methods
+    //     .mintPetNFT(`https://${petId}`)
+    //     .send({ from: account })
+    //     .once('receipt', (receipt) => {
+    //       console.log('🚀 receipt', receipt)
+
+    //       // setpetTransactions([...petTransactions, ])
+    //     })
+
+    //   console.log('*** reaching here ')
+    //   console.log('*** response ', res)
+
+      // reads from the chain
+      // const totalSupply = await contractData.methods.totalSupply().call()
+      // console.log('totalSupply', totalSupply)
+
+      // //  loads transactions
+      // for (let i = 1; i <= totalSupply; i++) {
+      //   const pet = await contractData.methods.tokenURI(i).call()
+      //   console.log('pet', pet)
+      //   setpetTransactions([...petTransactions, pet])
+      // }
+
   }
 
   const getNFTMetadata = async () => {
@@ -113,7 +150,7 @@ function PetDetails({ account, contractData }) {
     setPetsData(temp)
   }
 
-
+  console.log('petTransactions out ', petTransactions)
   return (
     <StylesProvider injectFirst>
       <Container className="root-pet-details">

@@ -5,6 +5,7 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
+import VerifiedUserSharpIcon from '@material-ui/icons/VerifiedUserSharp'
 import InputBase from '@material-ui/core/InputBase'
 import Badge from '@material-ui/core/Badge'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -123,15 +124,27 @@ export const Navbar = withRouter(({ account, loadWeb3 }) => {
                 Create Pet
               </Button>
 
-              <Button
-                variant="contained"
-                className="connect-wallet-btn"
-                onClick={() => {
-                  loadWeb3()
-                }}
-              >
-                {account ? account : 'Connect Wallet'}
-              </Button>
+            
+
+              {account ? (
+                <Button
+                  variant="contained"
+                  className="connected-btn"
+                  endIcon={<VerifiedUserSharpIcon />}
+                >
+                  Connected
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  className="connect-wallet-btn"
+                  onClick={() => {
+                    loadWeb3()
+                  }}
+                >
+                  Connect Wallet
+                </Button>
+              )}
 
               <IconButton
                 edge="end"

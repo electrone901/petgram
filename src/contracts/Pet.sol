@@ -9,7 +9,7 @@ contract Pet is ERC721 {
         address payable from
     );
 
-    constructor() ERC721("MyPet", "PET") public  {}
+    constructor() ERC721("Pet", "PET") public  {}
 
     function mintPetNFT(string memory _tokenURI) external {
         uint _tokenId = totalSupply().add(1);

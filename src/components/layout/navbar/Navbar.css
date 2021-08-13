@@ -64,3 +64,10 @@
     font-weight: 800;
     text-transform: none;
 }
+
+.connected-btn {
+    background-color: #15d636cc;
+    color: white;
+    font-weight: 800;
+    text-transform: none;
+}
