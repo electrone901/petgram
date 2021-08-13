@@ -5,25 +5,38 @@
     padding-bottom: 4rem;
 }
 
+.grid-container {
+    text-align: center;
+    background-color: #e3f9fb6e;
+}
+
 .img {
-    width: 80%;
+    width: 70%;
+    margin: auto;
 }
 
 .flex-container {
     display: flex;
     flex-direction: row;
-    width: 80%;
+    width: 70%;
     justify-content: space-between;
+    display: inline-flex;
 }
 
 .like-btn {
     text-transform: capitalize;
 }
 
+.details-text {
+    text-align: initial;
+    padding-left: 15%;
+}
+
 .wallet-btn {
-    text-transform: capitalize;
     float: right;
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
+    background-color: #c329c8;
+    font-weight: 900;
 }
 
 .text-field {

@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router'
 import Grid from '@material-ui/core/Grid'
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography'
@@ -16,11 +17,45 @@ import {
   IconButton,
 } from '@material-ui/core'
 
+import { apiKey } from '../../../APIKEYS'
 import './PetDetails.css'
+import { CircularStatic } from '../../commons/CircularProgressWithLabel'
 
 function PetDetails({ account, contractData }) {
+  const { petId } = useParams()
   const [petsData, setPetsData] = useState('')
+  const [image, setPetImage] = useState([])
+  const [petName, setPetName] = useState([])
+  const [petOwner, setOwnerName] = useState([])
+  const [petCategory, setPetCategory] = useState([])
   const [comment, setComment] = useState('')
+
+  // const [metadata, setMetadata] = useState({})
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    const getImage = (ipfsURL) => {
+      if (!ipfsURL) return
+      ipfsURL = ipfsURL.split('://')
+      return 'https://ipfs.io/ipfs/' + ipfsURL[1]
+    }
+
+    const getMetadata = async () => {
+      let data = await fetch(`https://ipfs.io/ipfs/${petId}/metadata.json`)
+      data = await data.json()
+      const [petOwner, petCategory] = data.description.split(',')
+      const imageFormated = getImage(data.image)
+      setPetImage(imageFormated)
+      setPetName(data.name)
+      setOwnerName(petOwner)
+      setPetCategory(petCategory)
+      // setMetadata(data)
+    }
+    if (petId) {
+      getMetadata()
+      getImage()
+    }
+  }, [petId, contractData])
 
   const handleChange = (event) => {
     setComment(event.target.value)
@@ -78,25 +113,26 @@ function PetDetails({ account, contractData }) {
     setPetsData(temp)
   }
 
-  console.log(petsData)
 
   return (
     <StylesProvider injectFirst>
       <Container className="root-pet-details">
         <div className="">
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={6}>
-              <h2>{`${pet.name} the ${pet.type}`}</h2>
+            <Grid item xs={12} sm={6} className="grid-container">
+              <div className="flex-container">
+                <h2>{`${petName} the ${petCategory}`}</h2>
+                <Button
+                  variant="contained"
+                  className="wallet-btn"
+                  color="primary"
+                  onClick={mintNFT}
+                >
+                  Mint NFT
+                </Button>
+              </div>
 
-              <Button variant="contained" onClick={getNFTMetadata}>
-                getNFTMetadata
-              </Button>
-
-              <h2>data from nftStorage</h2>
-
-              {/* <img src="" alt="" /> */}
-
-              <img className="img" src={pet.img} alt="pet" />
+              <img className="img" src={image} alt="pet" />
               <div className="flex-container">
                 <div>
                   <IconButton aria-label="add to favorites">
@@ -113,24 +149,20 @@ function PetDetails({ account, contractData }) {
                 </Typography>
               </div>
 
-              <Typography gutterBottom variant="subtitle1">
+              <Typography
+                gutterBottom
+                variant="subtitle1"
+                className="details-text"
+              >
                 Pet's Details
               </Typography>
 
-              <Typography variant="body2" gutterBottom>
-                Full rights and credits to the owner @{pet.Owner}...
+              <Typography variant="body2" gutterBottom className="details-text">
+                Full rights and credits to the owner @{petOwner}...
               </Typography>
             </Grid>
 
             <Grid item xs={12} sm={6}>
-              <Button
-                variant="contained"
-                className="wallet-btn"
-                color="primary"
-                onClick={mintNFT}
-              >
-                Mint NFT
-              </Button>
               <form noValidate autoComplete="off">
                 <TextField
                   id="outlined-basic"
