@@ -23,8 +23,9 @@ import { apiKey } from '../../../APIKEYS'
 import './PetDetails.css'
 import { CircularStatic } from '../../commons/CircularProgressWithLabel'
 
+
 function PetDetails({ account, contractData }) {
-  console.log('account, contractData ', account, contractData)
+
   const { petId } = useParams()
   const [petsData, setPetsData] = useState('')
   const [image, setPetImage] = useState([])
@@ -98,58 +99,51 @@ function PetDetails({ account, contractData }) {
     } catch (err) {
       console.error(err)
     }
-
-    // try {
-    //   console.log('**here', contractData)
-    //   // creates a blockchain transaction
-    //   const res = await contractData.methods
-    //     .mintPetNFT(`https://${petId}`)
-    //     .send({ from: account })
-    //     .once('receipt', (receipt) => {
-    //       console.log('🚀 receipt', receipt)
-
-    //       // setpetTransactions([...petTransactions, ])
-    //     })
-
-    //   console.log('*** reaching here ')
-    //   console.log('*** response ', res)
-
-    // reads from the chain
-    // const totalSupply = await contractData.methods.totalSupply().call()
-    // console.log('totalSupply', totalSupply)
-
-    // //  loads transactions
-    // for (let i = 1; i <= totalSupply; i++) {
-    //   const pet = await contractData.methods.tokenURI(i).call()
-    //   console.log('pet', pet)
-    //   setpetTransactions([...petTransactions, pet])
-    // }
   }
 
-  const getNFTMetadata = async () => {
-    const temp = []
-    const totalSupply = await contractData.methods.totalSupply().call()
+  // const getNFTMetadata = async () => {
+  //   const temp = []
+  //   const totalSupply = await contractData.methods.totalSupply().call()
 
-    for (let i = 1; i <= totalSupply; i++) {
-      try {
-        let metadataURL = await contractData.methods.tokenURI(i).call()
+  //   for (let i = 1; i <= totalSupply; i++) {
+  //     try {
+  //       let metadataURL = await contractData.methods.tokenURI(i).call()
 
-        // metadataURL = metadataURL.split('://')
+  //       // metadataURL = metadataURL.split('://')
 
-        let data = await fetch(metadataURL)
-        data = await data.json()
-        console.log(
-          '🚀 ~ file: PetDetails.js ~ line 70 ~ getNFTMetadata ~ data',
-          data,
-        )
+  //       let data = await fetch(metadataURL)
+  //       data = await data.json()
+  //       console.log(
+  //         '🚀 ~ file: PetDetails.js ~ line 70 ~ getNFTMetadata ~ data',
+  //         data,
+  //       )
 
-        temp.push(data)
-      } catch (error) {
-        console.error(error)
+  //       temp.push(data)
+  //     } catch (error) {
+  //       console.error(error)
+  //     }
+  //   }
+  //   setPetsData(temp)
+  // }
+
+  const checkout = () => {
+    window.unlockProtocol && window.unlockProtocol.loadCheckoutModal()
+    window.addEventListener('unlockProtocol.status', function(event) {
+      if(event.detail.state === "unlocked"){
+        alert("Worked!")
+        // loadWorks();
+        // setShowUnlockBtn(false);
       }
-    }
-    setPetsData(temp)
+    })
   }
+  // unlockHandler(e) {
+  //   this.setState(state => {
+  //     return {
+  //       ...state,
+  //       locked: e.detail
+  //     }
+  //   })
+  // }
 
   console.log('petTransactions out ', petTransactions)
   return (
@@ -201,6 +195,12 @@ function PetDetails({ account, contractData }) {
             </Grid>
 
             <Grid item xs={12} sm={6}>
+            <div onClick={checkout} style={{ cursor: "pointer" }}>
+              Unlock to see more work!{" "}
+              <span aria-label="locked" role="img">
+                🔒
+              </span>
+            </div>
               {codeHash ? (
                 <Card className="code-hash">
                   <Typography gutterBottom variant="subtitle1">
