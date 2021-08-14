@@ -113,27 +113,29 @@ export const Navbar = withRouter(({ account, loadWeb3 }) => {
                 PetGram
               </Typography>
             </Link>
+            <Button className="whiteLink" component={Link} to="/">
+              Home
+            </Button>
+
+            <Button className="whiteLink" component={Link} to="/create-pet">
+              Create Pet
+            </Button>
 
             <div className="grow" />
             <div className="sectionDesktop">
-              <Button className="whiteLink" component={Link} to="/">
-                Home
-              </Button>
-
-              <Button className="whiteLink" component={Link} to="/create-pet">
-                Create Pet
-              </Button>
-
-            
-
               {account ? (
-                <Button
-                  variant="contained"
-                  className="connected-btn"
-                  endIcon={<VerifiedUserSharpIcon />}
-                >
-                  Connected
-                </Button>
+                <>
+                  <Button className="whiteLink" to="/create-pet">
+                    {account.substring(0, 8)}...{account.substring(32, 24)}
+                  </Button>
+                  <Button
+                    variant="contained"
+                    className="connected-btn"
+                    endIcon={<VerifiedUserSharpIcon />}
+                  >
+                    Connected
+                  </Button>
+                </>
               ) : (
                 <Button
                   variant="contained"
