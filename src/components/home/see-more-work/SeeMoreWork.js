@@ -9,20 +9,57 @@ import {
 } from '@material-ui/core'
 import StarBorderIcon from '@material-ui/icons/StarBorder'
 
-import img1 from '../../../images/see-more-work/2.jpg'
 const imgData = [
   {
     img:
-      'https://images.unsplash.com/photo-1616058106290-8ec871aef47d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1268&q=80',
+      'https://raw.githubusercontent.com/electrone901/petgram/main/src/images/see-more-work/1.jpeg',
     title: 'Buba',
     author: 'David Guetta',
     featured: true,
   },
   {
-    img: '../../../images/see-more-work/2.jpg',
-    title: 'Buba',
+    img:
+      'https://raw.githubusercontent.com/electrone901/petgram/main/src/images/see-more-work/2.jpg',
+    title: 'Mr Vens',
     author: 'David Guetta',
     featured: false,
+  },
+  {
+    img:
+      'https://raw.githubusercontent.com/electrone901/petgram/main/src/images/see-more-work/3.jpg',
+    title: 'Fionna',
+    author: 'David Guetta',
+    featured: false,
+  },
+  {
+    img:
+      'https://raw.githubusercontent.com/electrone901/petgram/main/src/images/see-more-work/4.jpeg',
+    title: 'goodie',
+    author: 'David Guetta',
+    featured: true,
+  },
+
+  {
+    img:
+      'https://github.com/electrone901/petgram/blob/main/src/images/see-more-work/5.jpeg',
+    title: 'Lucy',
+    author: 'David Guetta',
+    featured: false,
+  },
+  {
+    img:
+      'https://raw.githubusercontent.com/electrone901/petgram/main/src/images/see-more-work/6.jpeg',
+    title: 'Lion',
+    author: 'David Guetta',
+    featured: false,
+  },
+
+  {
+    img:
+      'https://raw.githubusercontent.com/electrone901/petgram/main/src/images/see-more-work/6.jpeg',
+    title: 'Little lion',
+    author: 'David Guetta',
+    featured: true,
   },
 ]
 
@@ -34,13 +71,13 @@ function SeeMoreWork() {
         flexWrap: 'wrap',
         justifyContent: 'space-around',
         overflow: 'hidden',
-        // backgroundColor: 'black',
+        backgroundColor: 'black',
       }}
     >
       <ImageList
         rowHeight={200}
         gap={1}
-        style={{ width: 500, height: 450, transform: 'translateZ(0)' }}
+        style={{ width: 550, transform: 'translateZ(0)' }}
       >
         {imgData.map((item) => (
           <ImageListItem
