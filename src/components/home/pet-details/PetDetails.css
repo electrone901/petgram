@@ -39,6 +39,12 @@
     font-weight: 900;
 }
 
+.code-hash {
+    width: 80%;
+    padding: 1rem;
+    word-break: break-word;
+}
+
 .text-field {
     width: 80%;
 }

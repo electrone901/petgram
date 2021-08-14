@@ -6,6 +6,8 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import ShareIcon from '@material-ui/icons/Share'
+import Card from '@material-ui/core/Card'
+
 import { StylesProvider } from '@material-ui/core/styles'
 import {
   TextField,
@@ -31,6 +33,7 @@ function PetDetails({ account, contractData }) {
   const [petCategory, setPetCategory] = useState([])
   const [petTransactions, setpetTransactions] = useState([])
   const [comment, setComment] = useState('')
+  const [codeHash, setCodeHash] = useState('')
 
   // const [metadata, setMetadata] = useState({})
   const [loading, setLoading] = useState(false)
@@ -85,16 +88,15 @@ function PetDetails({ account, contractData }) {
   }
 
   const mintNFT = async (petId) => {
-    try{
+    try {
       const data = await contractData.methods
-        .mintPetNFT("test")
-        .send({ from: account });
+        .mintPetNFT(`https://${petId}`)
+        .send({ from: account })
 
-      console.log(data);
-
-    } catch(err) {
-      console.error(err);
-
+      console.log('data', data)
+      setCodeHash(data)
+    } catch (err) {
+      console.error(err)
     }
 
     // try {
@@ -112,17 +114,16 @@ function PetDetails({ account, contractData }) {
     //   console.log('*** reaching here ')
     //   console.log('*** response ', res)
 
-      // reads from the chain
-      // const totalSupply = await contractData.methods.totalSupply().call()
-      // console.log('totalSupply', totalSupply)
+    // reads from the chain
+    // const totalSupply = await contractData.methods.totalSupply().call()
+    // console.log('totalSupply', totalSupply)
 
-      // //  loads transactions
-      // for (let i = 1; i <= totalSupply; i++) {
-      //   const pet = await contractData.methods.tokenURI(i).call()
-      //   console.log('pet', pet)
-      //   setpetTransactions([...petTransactions, pet])
-      // }
-
+    // //  loads transactions
+    // for (let i = 1; i <= totalSupply; i++) {
+    //   const pet = await contractData.methods.tokenURI(i).call()
+    //   console.log('pet', pet)
+    //   setpetTransactions([...petTransactions, pet])
+    // }
   }
 
   const getNFTMetadata = async () => {
@@ -200,6 +201,34 @@ function PetDetails({ account, contractData }) {
             </Grid>
 
             <Grid item xs={12} sm={6}>
+              {codeHash ? (
+                <Card className="code-hash">
+                  <Typography gutterBottom variant="subtitle1">
+                    Confirmation Transaction:
+                  </Typography>
+                  <p>
+                    TransactionHash: <span>{codeHash.transactionHash}</span>{' '}
+                  </p>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={
+                      'https://ipfs.fleek.co/ipfs/' + codeHash.transactionHash
+                    }
+                  >
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      className="wallet-btn"
+                    >
+                      See transaction
+                    </Button>
+                  </a>
+                </Card>
+              ) : (
+                ''
+              )}
+
               <form noValidate autoComplete="off">
                 <TextField
                   id="outlined-basic"
