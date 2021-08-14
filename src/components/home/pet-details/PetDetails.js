@@ -22,10 +22,9 @@ import {
 import { apiKey } from '../../../APIKEYS'
 import './PetDetails.css'
 import { CircularStatic } from '../../commons/CircularProgressWithLabel'
-
+import SeeMoreWork from '../see-more-work/SeeMoreWork'
 
 function PetDetails({ account, contractData }) {
-
   const { petId } = useParams()
   const [petsData, setPetsData] = useState('')
   const [image, setPetImage] = useState([])
@@ -128,9 +127,9 @@ function PetDetails({ account, contractData }) {
 
   const checkout = () => {
     window.unlockProtocol && window.unlockProtocol.loadCheckoutModal()
-    window.addEventListener('unlockProtocol.status', function(event) {
-      if(event.detail.state === "unlocked"){
-        alert("Worked!")
+    window.addEventListener('unlockProtocol.status', function (event) {
+      if (event.detail.state === 'unlocked') {
+        alert('Worked!')
         // loadWorks();
         // setShowUnlockBtn(false);
       }
@@ -195,12 +194,12 @@ function PetDetails({ account, contractData }) {
             </Grid>
 
             <Grid item xs={12} sm={6}>
-            <div onClick={checkout} style={{ cursor: "pointer" }}>
-              Unlock to see more work!{" "}
-              <span aria-label="locked" role="img">
-                🔒
-              </span>
-            </div>
+              <div onClick={checkout} style={{ cursor: 'pointer' }}>
+                Unlock to see more work!{' '}
+                <span aria-label="locked" role="img">
+                  🔒
+                </span>
+              </div>
               {codeHash ? (
                 <Card className="code-hash">
                   <Typography gutterBottom variant="subtitle1">
@@ -273,6 +272,8 @@ function PetDetails({ account, contractData }) {
               )}
             </Grid>
           </Grid>
+
+          <SeeMoreWork />
         </div>
       </Container>
     </StylesProvider>
