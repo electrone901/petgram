@@ -25,6 +25,10 @@ function PetGallery() {
           },
         })
         cids = await cids.json()
+        console.log(
+          '🚀 ~ file: PetGallery.js ~ line 28 ~ loadPets ~ cids',
+          cids,
+        )
 
         const temp = []
         for (let cid of cids.value) {
@@ -34,6 +38,7 @@ function PetGallery() {
             )
 
             data = await data.json()
+            console.log(' data', data)
 
             // formats the imageURL
             const getImage = (ipfsURL) => {

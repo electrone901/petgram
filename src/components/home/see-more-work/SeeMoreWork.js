@@ -6,6 +6,8 @@ import {
   IconButton,
   Button,
 } from '@material-ui/core'
+import ReactDOM from 'react-dom'
+import Modal from 'react-modal'
 import StarBorderIcon from '@material-ui/icons/StarBorder'
 
 const imgData = [
@@ -62,14 +64,51 @@ const imgData = [
 ]
 
 function SeeMoreWork({ petName, unlock, setUnlock, checkout }) {
+  const [modalIsOpen, setIsOpen] = React.useState(false)
+
+  const openModal = (image) => {
+    setIsOpen(true)
+  }
+
+  const closeModal = () => {
+    setIsOpen(false)
+  }
   return (
-    <div style={{ textAlign: 'center', paddingTop: '4rem' }}>
+    <div
+      style={{ textAlign: 'center', paddingTop: '4rem', paddingBottom: '3rem' }}
+    >
       {unlock ? (
         <div>
           <p>
-            Congratulations🎉🎉...!! Now you have acces exclusive content for 30 days. Thank you for your support.
-            <p style={{fontWeight: 700}} >{petName}~</p>
+            Congratulations🎉🎉...!! Now you have acces exclusive content for 30
+            days. Thank you for your support.
           </p>
+          <p style={{ fontWeight: 700 }}>{petName}~</p>
+
+          <div>
+            <Modal
+              isOpen={modalIsOpen}
+              onRequestClose={closeModal}
+              style={{
+                top: '50%',
+                left: '50%',
+                right: 'auto',
+                bottom: 'auto',
+                marginRight: '-50%',
+                transform: 'translate(-50%, -50%)',
+              }}
+              // contentLabel="Example Modal"
+            >
+              <button onClick={closeModal}>close</button>
+              <img
+                src="https://raw.githubusercontent.com/electrone901/petgram/main/src/images/see-more-work/1.jpeg"
+                alt="Buba"
+                style={{
+                  width: '100%',
+                }}
+              />
+            </Modal>
+          </div>
 
           <div
             style={{
@@ -91,6 +130,7 @@ function SeeMoreWork({ petName, unlock, setUnlock, checkout }) {
                   key={item.img}
                   cols={item.featured ? 2 : 1}
                   rows={item.featured ? 2 : 1}
+                  onClick={openModal}
                 >
                   <img src={item.img} alt={item.title} />
                   <ImageListItemBar
