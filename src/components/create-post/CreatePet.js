@@ -62,6 +62,8 @@ function CreatePet() {
             <Typography className="title" color="textPrimary" gutterBottom>
               Add a photo of your pet
             </Typography>
+
+            {image ? <img src={URL.createObjectURL(image)} alt="pet"  className="img-preview" /> : ''}
             <div className="form-container">
               <form className="form" noValidate autoComplete="off">
                 <input

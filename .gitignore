@@ -9,6 +9,7 @@
 /coverage
 notes.txt
 APIKEYS.js
+.env
 
 # production
 /build

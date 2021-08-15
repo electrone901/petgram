@@ -25,11 +25,6 @@ import { CircularStatic } from '../../commons/CircularProgressWithLabel'
 import SeeMoreWork from '../see-more-work/SeeMoreWork'
 
 function PetDetails({ account, contractData }) {
-  console.log(
-    '🚀 ~ file: PetDetails.js ~ line 28 ~ PetDetails ~ account, contractData',
-    account,
-    contractData,
-  )
   const { petId } = useParams()
   const [petsData, setPetsData] = useState('')
   const [image, setPetImage] = useState([])
@@ -40,7 +35,6 @@ function PetDetails({ account, contractData }) {
   const [comment, setComment] = useState('')
   const [codeHash, setCodeHash] = useState('')
 
-  // const [metadata, setMetadata] = useState({})
   const [loading, setLoading] = useState(false)
   const [unlock, setUnlock] = useState(false)
 
@@ -60,7 +54,6 @@ function PetDetails({ account, contractData }) {
       setPetName(data.name)
       setOwnerName(petOwner)
       setPetCategory(petCategory)
-      // setMetadata(data)
     }
 
     if (petId) {
@@ -81,16 +74,19 @@ function PetDetails({ account, contractData }) {
     setComment('')
   }
 
-  const pet = {
-    name: 'Oliver',
-    img: 'https://siasky.net/OADaRfw_nMqqXCz5NXXLq5xN6R3nScEKbzsRdqdEQrLL5A',
-    type: 'Cat',
-    Owner: 'Luis C',
-    likes: 20,
-    comments: [
-      { author: 'Albert', content: 'This is awesome' },
-      { author: 'Angie', content: 'So Cute~' },
-    ],
+  let pet = {}
+  if (petId === 'bafyreifathmuem47api3gwwxbo6lt4bewsfr2et7sfyv6dw5epkuv62ika') {
+    pet = {
+      name: 'Oliver',
+      img: 'https://siasky.net/OADaRfw_nMqqXCz5NXXLq5xN6R3nScEKbzsRdqdEQrLL5A',
+      type: 'Cat',
+      Owner: 'Luis C',
+      likes: 20,
+      comments: [
+        { author: 'Albert', content: 'This is awesome' },
+        { author: 'Angie', content: 'So Cute~' },
+      ],
+    }
   }
 
   const mintNFT = async (petId) => {
@@ -106,51 +102,16 @@ function PetDetails({ account, contractData }) {
     }
   }
 
-  // const getNFTMetadata = async () => {
-  //   const temp = []
-  //   const totalSupply = await contractData.methods.totalSupply().call()
-
-  //   for (let i = 1; i <= totalSupply; i++) {
-  //     try {
-  //       let metadataURL = await contractData.methods.tokenURI(i).call()
-
-  //       // metadataURL = metadataURL.split('://')
-
-  //       let data = await fetch(metadataURL)
-  //       data = await data.json()
-  //       console.log(
-  //         '🚀 ~ file: PetDetails.js ~ line 70 ~ getNFTMetadata ~ data',
-  //         data,
-  //       )
-
-  //       temp.push(data)
-  //     } catch (error) {
-  //       console.error(error)
-  //     }
-  //   }
-  //   setPetsData(temp)
-  // }
-
   const checkout = () => {
     window.unlockProtocol && window.unlockProtocol.loadCheckoutModal()
     window.addEventListener('unlockProtocol.status', function (event) {
       if (event.detail.state === 'unlocked') {
         alert('Worked!')
         setUnlock(true)
-        // setShowUnlockBtn(false);
       }
     })
   }
-  // unlockHandler(e) {
-  //   this.setState(state => {
-  //     return {
-  //       ...state,
-  //       locked: e.detail
-  //     }
-  //   })
-  // }
 
-  console.log('petTransactions out ', petTransactions)
   return (
     <StylesProvider injectFirst>
       <Container className="root-pet-details">
@@ -182,7 +143,7 @@ function PetDetails({ account, contractData }) {
                 </div>
 
                 <Typography variant="body1" color="primary">
-                  {pet.likes} Likes
+                  {pet?.likes ? pet.likes : 0} Likes
                 </Typography>
               </div>
 
@@ -212,7 +173,8 @@ function PetDetails({ account, contractData }) {
                     target="_blank"
                     rel="noopener noreferrer"
                     href={
-                      'https://ipfs.fleek.co/ipfs/' + codeHash.transactionHash
+                      'https://mumbai.polygonscan.com/tx/' +
+                      codeHash.transactionHash
                     }
                   >
                     <Button
@@ -281,6 +243,7 @@ function PetDetails({ account, contractData }) {
           </div> */}
 
           <SeeMoreWork
+          petName={petName}
             unlock={unlock}
             setUnlock={setUnlock}
             checkout={checkout}

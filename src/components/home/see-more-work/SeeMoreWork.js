@@ -61,14 +61,14 @@ const imgData = [
   },
 ]
 
-function SeeMoreWork({ unlock, setUnlock, checkout }) {
+function SeeMoreWork({ petName, unlock, setUnlock, checkout }) {
   return (
     <div style={{ textAlign: 'center', paddingTop: '4rem' }}>
       {unlock ? (
         <div>
           <p>
-            Congratulations!! You have acces to this exclusive content for 30
-            days.
+            Congratulations🎉🎉...!! Now you have acces exclusive content for 30 days. Thank you for your support.
+            <p style={{fontWeight: 700}} >{petName}~</p>
           </p>
 
           <div
