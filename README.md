@@ -16,8 +16,8 @@ PetGram application makes use of the following softwares:
 ###  `React Js, Material-ui,  Web3` React Js for the frontend,  Material-ui and Web3 to connect to blockchain.
 
 ## Demo
-- [Home Page](https://easybankking.netlify.app/)
-  ![Main Page](https://raw.githubusercontent.com/electrone901/Easybank/main/images/webSite-screenshots/1.png) <br> <br>
+- [Home Page](https://6119c859fed150c8471f90fd--petgrams.netlify.app/)
+  ![Main Page](https://raw.githubusercontent.com/electrone901/petgram/main/src/images/cover.png) <br> <br>
 
 # Getting Started
 ### `yarn start`
